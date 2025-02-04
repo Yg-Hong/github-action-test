@@ -46,9 +46,6 @@ jobs:
           cd frontend
           pnpm build
 
-      # - name: Deploy
-      #   run: npm run deploy
-
   backend:
     runs-on: ubuntu-latest
     steps:
@@ -74,5 +71,20 @@ jobs:
           chmod +x gradlew
           ./gradlew build --no-daemon
 
-      # - name: Deploy
-      #   run:
+  java-sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup JDK (for Java SDK)
+        uses: actions/setup-java@v4
+        with:
+          java-version: "11"
+          distribution: "corretto"
+
+      - name: Build and test Java SDK
+        run: |
+          cd sdk/java-sdk
+          chmod +x gradlew
+          ./gradlew build --no-daemon
