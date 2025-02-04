@@ -20,20 +20,30 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Setup pnmp
+        uses: pnpm/action-setup@v4
+        with:
+          version: "9.15.4"
+
       - name: Install dependencies
         run: |
           cd frontend
-          npm install
+          pnpm install
 
       - name: Run lint
         run: |
           cd frontend
-          npm run lint
+          pnpm lint
+
+      - name: Check ts
+        run: |
+          cd frontend
+          pnpm tsc
 
       - name: Build Frontend
         run: |
           cd frontend
-          npm run build
+          pnpm build
 
       # - name: Deploy
       #   run: npm run deploy
