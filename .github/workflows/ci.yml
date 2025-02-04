@@ -1,0 +1,40 @@
+name: CI pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest # The runner to use
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Run tests and lint
+        run: |
+          cd frontend
+          npm run lint
+          npm run test
+
+      - name: Build Frontend
+        run: |
+          cd frontend
+          npm run build
+
+      # - name: Deploy
+      #   run: npm run deploy
